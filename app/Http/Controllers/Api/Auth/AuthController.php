@@ -32,13 +32,11 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            throw new AuthenticationException('User not found');
+            throw new AuthenticationException('Usuário inexistente.');
         }
 
         if (!Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages(
-                ['email' => 'The provided credentials are incorrect'],
-            );
+            throw new AuthenticationException('As credenciais inseridas são inválidas.');
         }
 
         $user->tokens()->delete();
