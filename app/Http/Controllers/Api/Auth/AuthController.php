@@ -8,6 +8,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -33,6 +34,8 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
+
 
         return $this->respondWithToken($token);
     }
@@ -69,6 +72,18 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
+    public function verifyToken(Request $request)
+    {
+        try {
+            $token = JWTAuth::parseToken()->authenticate();
+            // Token é válido, você pode adicionar lógica adicional aqui, se necessário.
+            return response()->json(['message' => 'Token válido'], 200);
+        } catch (\Exception $e) {
+            // Token é inválido
+            return response()->json(['error' => 'Token inválido'], 401);
+        }
+    }
+
     /**
      * Get the token array structure.
      *
@@ -79,6 +94,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
+            'user' => auth()->user(),
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
