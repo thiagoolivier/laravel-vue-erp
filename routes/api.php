@@ -15,22 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::group(['prefix' => 'v1'], function () {
-//     Route::post('/login', [AuthController::class, 'login']);
-//     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-//     Route::get('/verify')->middleware('auth:sanctum');
-
-//     Route::middleware('auth:sanctum')->group(function () {
-//         Route::get('/user', function (Request $request) {
-//             return $request->user();
-//         });
-//     });
-// });
-
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'v1/auth'
-], function ($router) {
+Route::group(['middleware' => 'api', 'prefix' => 'v1/auth'], function ($router) {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
