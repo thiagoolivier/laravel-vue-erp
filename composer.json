@@ -9,6 +9,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/tinker": "^2.8",
+        "spatie/laravel-route-attributes": "^1.20",
         "tymon/jwt-auth": "^2.0"
     },
     "require-dev": {

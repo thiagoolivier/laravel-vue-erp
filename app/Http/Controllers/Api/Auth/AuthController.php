@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -20,6 +22,7 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      */
+    #[Post('auth/login', name: "auth.login")]
     public function login(): JsonResponse
     {
         $credentials = request(['email', 'password']);
@@ -34,6 +37,7 @@ class AuthController extends Controller
     /**
      * Get the authenticated User.
      */
+    #[Get('auth/me', name: "auth.me")]
     public function me(): JsonResponse
     {
         return response()->json(auth()->user());
@@ -42,6 +46,7 @@ class AuthController extends Controller
     /**
      * Log the user out (Invalidate the token).
      */
+    #[Post('auth/logout', name: "auth.logout")]
     public function logout(): JsonResponse
     {
         auth()->logout();
@@ -52,11 +57,13 @@ class AuthController extends Controller
     /**
      * Refresh a token.
      */
+    #[Get('auth/refresh', name: "auth.refresh")]
     public function refresh(): JsonResponse
     {
         return $this->respondWithToken(auth()->refresh());
     }
 
+    #[Get('auth/verify', name: "auth.verify")]
     public function verifyToken(Request $request): JsonResponse
     {
         try {
