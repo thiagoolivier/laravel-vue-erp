@@ -21,7 +21,7 @@ class UserController extends Controller
             ->when($request->input('email'), function($q) use ($request) {
                 $q->where('email', $request->input('email'));
             })
-            ->select(['id', 'name', 'email', 'created_at'])
+            ->select(['id', 'name', 'email', 'created_at', 'updated_at'])
             ->get();
 
         return response()->json([
