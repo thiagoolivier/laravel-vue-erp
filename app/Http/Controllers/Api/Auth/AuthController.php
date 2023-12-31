@@ -40,7 +40,7 @@ class AuthController extends Controller
     #[Get('auth/me', name: "auth.me")]
     public function me(): JsonResponse
     {
-        return response()->json(auth()->user());
+        return response()->json(auth()->user(), 200);
     }
 
     /**
@@ -51,7 +51,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
     /**
@@ -68,10 +68,8 @@ class AuthController extends Controller
     {
         try {
             $token = JWTAuth::parseToken()->authenticate();
-            // Token é válido, você pode adicionar lógica adicional aqui, se necessário.
             return response()->json(['message' => 'Token is valid'], 200);
         } catch (\Exception $e) {
-            // Token é inválido
             return response()->json(['error' => 'Token is invalid'], 401);
         }
     }
