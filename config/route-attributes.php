@@ -15,7 +15,7 @@ return [
     'directories' => [
         // app_path('Http/Controllers'),
         
-        app_path('Http/Controllers/Api') => [
+        app_path('Http/Controllers/API') => [
            'prefix' => 'api/v1',
            'middleware' => 'api',
             // only register routes in files that match the patterns
