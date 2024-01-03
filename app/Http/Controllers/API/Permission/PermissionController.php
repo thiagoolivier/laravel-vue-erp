@@ -6,16 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\RouteAttributes\Attributes\Delete;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Put;
 
 class PermissionController extends Controller
 {
+    #[Get('permissions', name: "permission.index")]
     public function index(): JsonResponse
     {
         $permissions = Permission::all();
 
-        return response()->json($permissions);
+        return response()->json([
+            'permissions' => $permissions,
+        ]);
     }
 
+    #[Get('permission/{id}', name: "permission.show")]
     public function show($id): JsonResponse
     {
         $permission = Permission::findOrFail($id);
@@ -23,6 +31,7 @@ class PermissionController extends Controller
         return response()->json($permission);
     }
 
+    #[Post('permission', name: "permission.store")]
     public function store(Request $request): JsonResponse
     {
         $request->validate([
@@ -35,6 +44,7 @@ class PermissionController extends Controller
         return response()->json($permission, 201);
     }
 
+    #[Put('permission/{id}', name: "permission.update")]
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -48,6 +58,7 @@ class PermissionController extends Controller
         return response()->json($permission);
     }
 
+    #[Delete('permission/{id}', name: "permission.update")]
     public function delete($id)
     {
         $permission = Permission::find($id);

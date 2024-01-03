@@ -61,10 +61,24 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
+    }    
 
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
+
+    public function hasRole(string $role)
+    {
+        if (!$this->roles->where('name', $role)->first()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
     }
 }
