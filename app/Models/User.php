@@ -73,7 +73,6 @@ class User extends Authenticatable implements JWTSubject
         if (!$this->roles->where('name', $role)->first()) {
             return false;
         }
-
         return true;
     }
 
