@@ -28,7 +28,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Credenciais inválidas.'], 401);
+            return response()->json(['message' => 'Invalid credentials.'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -70,7 +70,7 @@ class AuthController extends Controller
             $token = JWTAuth::parseToken()->authenticate();
             return response()->json(['message' => 'Token is valid'], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Token is invalid'], 401);
+            return response()->json(['message' => 'Token is invalid'], 401);
         }
     }
 

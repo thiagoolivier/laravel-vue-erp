@@ -48,19 +48,21 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:50|min:3',
-            'email' => 'required|email|max:50|min:3',
+            'email' => 'required|email|max:50|min:3|unique:App\Models\User,email',
             'password' => 'required|max:32|min:8',
         ]);
 
-        $user = new User();
+        try {
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+            ]);
 
-        $user->save([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-        ]);
-
-        return response()->json($user, 201);
+            return response()->json($user, 201);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Cannot register the user.'], 500);
+        }        
     }
 
     #[Put(uri: "/user/{id}", name: "user.update")]
@@ -86,17 +88,21 @@ class UserController extends Controller
     #[Delete(uri: "/user/{id}", name: "user.delete")]
     public function delete($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
+
+        if ($user && $user->id === auth()->user()) {
+            return response()->json(["message"=> "The authenticated user can't be deleted."], 403);
+        }
 
         if (!$user) {
-            return response()->json(['error' => 'Resource not found'], 404);
+            return response()->json(['message' => 'Resource not found'], 404);
         }
 
         try {
             $user->delete();
             return response()->json(null, 204);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error during resource deletion'], 500);
+            return response()->json(['message' => 'Error during resource deletion'], 500);
         }
     }
 }
