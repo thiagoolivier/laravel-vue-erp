@@ -36,7 +36,7 @@ class UserController extends Controller
     }
 
     #[Get(uri: "/user/{id}", name: "user.show")]
-    public function show($id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         $user = User::findOrFail($id);
 
@@ -66,27 +66,22 @@ class UserController extends Controller
     }
 
     #[Put(uri: "/user/{id}", name: "user.update")]
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         $request->validate([
-            'name' => 'required|string|max:50|min:3',
-            'email' => 'required|email|max:50|min:3',
-            'password' => 'required|max:32|min:8',
+            'name' => 'string|max:50|min:3',
+            'email' => 'email|max:50|min:3',
         ]);
 
         $user = User::findOrFail($id);
 
-        $user->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-        ]);
+        $user->update($request->all());
 
         return response()->json(['message' => 'User updated successfully', 'user' => $user]);
     }
 
     #[Delete(uri: "/user/{id}", name: "user.delete")]
-    public function delete($id)
+    public function delete(int $id): JsonResponse
     {
         $user = User::findOrFail($id);
 
