@@ -59,7 +59,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->input('password')),
             ]);
 
-            return response()->json($user, 201);
+            return response()->json(['message' => 'User successfuly created.'], 201);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Cannot register the user.'], 500);
         }        

@@ -41,7 +41,7 @@ class PermissionController extends Controller
 
         $permission = Permission::create($request->all());
 
-        return response()->json($permission, 201);
+        return response()->json(['message' => 'Permission successfuly created.'], 201);
     }
 
     #[Put('permission/{id}', name: "permission.update")]
@@ -64,14 +64,14 @@ class PermissionController extends Controller
         $permission = Permission::find($id);
 
         if (!$permission) {
-            return response()->json(['error' => 'Recurso não encontrado'], 404);
+            return response()->json(['error' => 'Not found.'], 404);
         }
 
         try {
             $permission->delete();        
             return response()->json(null, 204);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro durante a exclusão do recurso'], 500);
+            return response()->json(['error' => 'Error during deletion.'], 500);
         }
     }
 }
