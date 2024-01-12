@@ -24,9 +24,13 @@ class RoleController extends Controller
     #[Get(uri:"/role/{id}", name:"role.show")]
     public function show($id): JsonResponse
     {
-        $role = Role::findOrFail($id);
+        try {
+            $role = Role::findOrFail($id);
 
-        return response()->json($role);
+            return response()->json($role, 200);//code...
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Cannot find the requested register.'], 500);
+        }
     }
 
     #[Post(uri:"/role", name:"role.store")]
@@ -37,9 +41,9 @@ class RoleController extends Controller
             'description' => 'required|string|max:50|min:3',
         ]);
 
-        $role = Role::create($request->all());
+        Role::create($request->all());
 
-        return response()->json($role, 201);
+        return response()->json(['message' => 'Role successfuly created.'], 201);
     }
 
     #[Put(uri:"/role/{id}", name:"role.update")]

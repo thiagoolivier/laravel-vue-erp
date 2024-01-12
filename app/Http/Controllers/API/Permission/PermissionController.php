@@ -39,7 +39,7 @@ class PermissionController extends Controller
             'description' => 'required|string|max:50|min:3',
         ]);
 
-        $permission = Permission::create($request->all());
+        Permission::create($request->all());
 
         return response()->json(['message' => 'Permission successfuly created.'], 201);
     }
@@ -55,7 +55,7 @@ class PermissionController extends Controller
         $permission = Permission::findOrFail($id);
         $permission->update($request->all());
 
-        return response()->json($permission);
+        return response()->json(['message' => 'Permission successfuly updated.'], 200);
     }
 
     #[Delete('permission/{id}', name: "permission.update")]
