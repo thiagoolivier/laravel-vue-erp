@@ -38,7 +38,7 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:50|min:3',
-            'description' => 'required|string|max:50|min:3',
+            'description' => 'required|string|max:200|min:3',
         ]);
 
         Role::create($request->all());
@@ -66,14 +66,14 @@ class RoleController extends Controller
         $role = Role::find($id);
 
         if (!$role) {
-            return response()->json(['error' => 'Recurso não encontrado'], 404);
+            return response()->json(['message' => 'Not found'], 404);
         }
 
         try {
             $role->delete();        
             return response()->json(null, 204);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro durante a exclusão do recurso'], 500);
+            return response()->json(['message' => 'Error during resource deletion'], 500);
         }
     }
 }
