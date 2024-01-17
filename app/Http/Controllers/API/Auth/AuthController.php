@@ -46,7 +46,7 @@ class AuthController extends Controller
     /**
      * Log the user out (Invalidate the token).
      */
-    #[Post('auth/logout', name: "auth.logout")]
+    #[Get('auth/logout', name: "auth.logout")]
     public function logout(): JsonResponse
     {
         auth()->logout();

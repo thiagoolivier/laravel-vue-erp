@@ -26,8 +26,7 @@ class RoleController extends Controller
     {
         try {
             $role = Role::findOrFail($id);
-
-            return response()->json($role, 200);//code...
+            return response()->json($role, 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Cannot find the requested register.'], 500);
         }
