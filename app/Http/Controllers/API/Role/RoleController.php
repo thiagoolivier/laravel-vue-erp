@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Role;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,10 +15,10 @@ use Spatie\RouteAttributes\Attributes\Put;
 
 class RoleController extends Controller
 {
-    #[Get(uri:"/roless", name:"role.index")]
+    #[Get(uri:"/roles", name:"role.index")]
     public function index(): JsonResponse
     {
-        $roles = Role::all();
+        $roles = Role::whereNot('id', 1)->whereNot('name', 'Admin')->get();
 
         return response()->json(['roles' => $roles]);
     }
@@ -97,7 +98,7 @@ class RoleController extends Controller
         }
     }
 
-    #[Post(uri: "/roles/{id}/permissions", name: "role.store")]
+    #[Post(uri: "/roles/{id}/permissions", name: "role.permissions_edit")]
     public function editRolePermissions($id, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
