@@ -135,7 +135,7 @@ class UserController extends Controller
         $user->roles()->sync($request->input('roles'));
 
         return response()->json([
-            'message' => ($user->name . ' roles updated successfuly.')
+            'message' => ($user->name . "'s roles updated successfuly.")
         ], 201);
     }
 }

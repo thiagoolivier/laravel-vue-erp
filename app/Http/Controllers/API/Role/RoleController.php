@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\Role;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -56,7 +55,7 @@ class RoleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:50|min:3',
-            'description' => 'required|string|max:4|min:3',
+            'description' => 'required|string|max:200|min:3',
         ]);
 
         if ($validator->fails()) {
@@ -66,7 +65,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->update($request->all());
 
-        return response()->json($role);
+        return response()->json(['message' => 'Role successfuly updated.']);
     }
 
     #[Delete(uri:"/roles/{id}", name:"role.delete")]
@@ -77,6 +76,10 @@ class RoleController extends Controller
         if (!$role) {
             return response()->json(['message' => 'Not found'], 404);
         }
+
+        if(sizeof($role->users) > 0) {
+            return response()->json(['message' => "Can't delete the role. There are users using it."], 500);
+        };
 
         try {
             $role->delete();
