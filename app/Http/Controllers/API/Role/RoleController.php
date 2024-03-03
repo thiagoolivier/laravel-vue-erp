@@ -14,7 +14,7 @@ use Spatie\RouteAttributes\Attributes\Put;
 
 class RoleController extends Controller
 {
-    #[Get(uri:"/roles", name:"role.index")]
+    #[Get(uri:"/roles", name:"roles.index")]
     public function index(): JsonResponse
     {
         $roles = Role::whereNot('id', 1)->whereNot('name', 'Admin')->get();
@@ -22,7 +22,7 @@ class RoleController extends Controller
         return response()->json(['roles' => $roles]);
     }
 
-    #[Get(uri:"/roles/{id}", name:"role.show")]
+    #[Get(uri:"/roles/{id}", name:"roles.show")]
     public function show($id): JsonResponse
     {
         try {
@@ -33,7 +33,7 @@ class RoleController extends Controller
         }
     }
 
-    #[Post(uri:"/roles", name:"role.store")]
+    #[Post(uri:"/roles", name:"roles.store")]
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -50,7 +50,7 @@ class RoleController extends Controller
         return response()->json(['message' => 'Role successfuly created.'], 201);
     }
 
-    #[Put(uri:"/roles/{id}", name:"role.update")]
+    #[Put(uri:"/roles/{id}", name:"roles.update")]
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -68,7 +68,7 @@ class RoleController extends Controller
         return response()->json(['message' => 'Role successfuly updated.']);
     }
 
-    #[Delete(uri:"/roles/{id}", name:"role.delete")]
+    #[Delete(uri:"/roles/{id}", name:"roles.delete")]
     public function delete($id)
     {
         $role = Role::find($id);
@@ -89,7 +89,7 @@ class RoleController extends Controller
         }
     }
 
-    #[Get(uri: "/roles/{id}/permissions", name: "role.permissions")]
+    #[Get(uri: "/roles/{id}/permissions", name: "roles.permissions")]
     public function getRolePermissions($id): JsonResponse
     {
         try {
@@ -101,7 +101,7 @@ class RoleController extends Controller
         }
     }
 
-    #[Post(uri: "/roles/{id}/permissions", name: "role.permissions_edit")]
+    #[Post(uri: "/roles/{id}/permissions", name: "roles.permissions_edit")]
     public function editRolePermissions($id, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [

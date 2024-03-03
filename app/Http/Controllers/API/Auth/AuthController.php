@@ -68,9 +68,9 @@ class AuthController extends Controller
     {
         try {
             $token = JWTAuth::parseToken()->authenticate();
-            return response()->json(['message' => 'Token is valid'], 200);
+            return response()->json([], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Token is invalid'], 401);
+            return response()->json([], 401);
         }
     }
 

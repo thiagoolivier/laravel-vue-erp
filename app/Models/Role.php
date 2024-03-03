@@ -14,9 +14,10 @@ class Role extends Model
         'name',
         'description',
     ];
-
-    protected $with = [
-        'permissions',
+    
+    protected $hidden = [
+        'created_at',
+        'updated_at',
     ];
 
     public function permissions(): BelongsToMany
