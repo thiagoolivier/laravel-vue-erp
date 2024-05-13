@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom colors */
+.light {
+  --primary: 240, 240, 240;
+  --secondary: 60, 60, 60;
+  --tertiary: 215, 215, 215;
+
+  --tr-primary: 250, 250, 250;
+  --tr-secondary: 240, 240, 240;
+}
+
+.dark {
+  --primary: 60, 60, 60;
+  --secondary: 240, 240, 240;
+  --tertiary: 50, 50, 50;
+
+  --tr-primary: 83, 83, 83;
+  --tr-secondary: 93, 93, 93;
+}
+
+/* Font definitions */
+@font-face {
+  font-family: 'Kanit';
+  src: url('/fonts/Kanit/Kanit-SemiBold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Kanit';
+  src: url('/fonts/Kanit/Kanit-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Kanit';
+  src: url('/fonts/Kanit/Kanit-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+
+body {
+  font-family: 'Kanit', sans-serif;
+  background: rbga(var(--primary));
+}
+
+/* Card */
+.custom-card {
+  @apply max-sm:w-full md:rounded p-1 md:p-6 space-y-4 max-w-full;
+  @media (min-width: 768px) {
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.side-list {
+  @apply bg-tertiary w-full min-w-[75vw] md:min-w-[16rem] min-h-[35vh] md:min-h-[50vh] border rounded-[14px] flex flex-col items-center overflow-y-auto max-h-[35vh] md:max-h-[50vh] p-2 gap-1;
+}
+
+/* Buttons */
+.green-btn {
+  @apply bg-green-600 py-2 px-4 rounded-full text-white font-bold flex flex-row items-center gap-2 disabled:opacity-50 transition ease-in;
+}
+
+.red-btn {
+  @apply bg-red-600 py-1 px-3 rounded-full text-white font-bold flex flex-row items-center gap-2 disabled:opacity-50 transition ease-in;
+}
+
+/* Form */
+.form-group {
+  @apply flex flex-col gap-1 lg:min-w-[20rem];
+}
+
+.form-group > label {
+  @apply font-medium text-base;
+}
+
+.form-group > input,
+textarea {
+  @apply border rounded py-1 px-2 focus:outline-none focus:border-blue-400 focus:ring-blue-400 focus:ring-1 caret-black text-black;
+}
+
+.green-btn:hover,
+.red-btn:hover {
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.loading:after {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-color: transparent transparent currentColor transparent;
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.custom-scrollbar {
+  /* width */
+  ::-webkit-scrollbar {
+    @apply w-0;
+  }
+}
