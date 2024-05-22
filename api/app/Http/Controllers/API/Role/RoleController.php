@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Spatie\RouteAttributes\Attributes\Delete;
 use Spatie\RouteAttributes\Attributes\Get;
@@ -17,7 +18,7 @@ class RoleController extends Controller
     #[Get(uri:"/roles", name:"roles.index")]
     public function index(): JsonResponse
     {
-        $roles = Role::whereNot('id', 1)->whereNot('name', 'Admin')->get();
+        $roles = Role::getRoles();
 
         return response()->json(['roles' => $roles]);
     }
@@ -26,8 +27,10 @@ class RoleController extends Controller
     public function show($id): JsonResponse
     {
         try {
-            $role = Role::findOrFail($id);
-            return response()->json($role, 200);
+            return response()->json(
+                Role::findOrFail($id), 
+                200
+            );
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Cannot find the requested register.'], 500);
         }
@@ -45,7 +48,9 @@ class RoleController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        Role::create($request->all());
+        Role::create($request->only(['name', 'description']));
+
+        Cache::forget('roles');
 
         return response()->json(['message' => 'Role successfuly created.'], 201);
     }
@@ -65,11 +70,13 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->update($request->all());
 
+        Cache::forget('roles');
+
         return response()->json(['message' => 'Role successfuly updated.']);
     }
 
     #[Delete(uri:"/roles/{id}", name:"roles.delete")]
-    public function delete($id)
+    public function delete(int $id)
     {
         $role = Role::find($id);
 
@@ -83,7 +90,10 @@ class RoleController extends Controller
 
         try {
             $role->delete();
-            return response()->json(null, 204);
+
+            Cache::forget('roles');
+            
+            return response()->json(status: 204);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error during resource deletion'], 500);
         }
