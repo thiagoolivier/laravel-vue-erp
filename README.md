@@ -1,5 +1,4 @@
-# MyERP 
-### _A simple distributed ERP app_
+# MyERP
 
 ##### Features
 
