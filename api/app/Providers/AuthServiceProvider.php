@@ -25,12 +25,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // $permissions = Permission::select('id', 'name')->with('roles')->get();
+        $permissions = Permission::select('id', 'name')->with('roles')->get();
 
-        // foreach ($permissions as $permission) {
-        //     Gate::define($permission->name, function(User $user) use ($permission) {
-        //         return $permission->roles->intersect($user->roles)->isNotEmpty() || $user->isAdmin();
-        //     });
-        // }
+        foreach ($permissions as $permission) {
+            Gate::define($permission->name, function(User $user) use ($permission) {
+                return $permission->roles->intersect($user->roles)->isNotEmpty() || $user->isAdmin();
+            });
+        }
     }
 }
