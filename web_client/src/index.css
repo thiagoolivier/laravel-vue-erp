@@ -53,6 +53,11 @@ body {
   }
 }
 
+.chart-card {
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.2);
+  @apply rounded min-h-[240px] md:min-h-[360px] p-2
+}
+
 .side-list {
   @apply bg-tertiary w-full min-w-[75vw] md:min-w-[16rem] min-h-[35vh] md:min-h-[50vh] border rounded-[14px] flex flex-col items-center overflow-y-auto max-h-[35vh] md:max-h-[50vh] p-2 gap-1;
 }

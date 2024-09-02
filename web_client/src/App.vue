@@ -15,6 +15,9 @@
           <RouterLink to="/">
             <span :class="{ 'selected-nav-option': currentRoutePath === '/' }">Home</span>
           </RouterLink>
+          <RouterLink to="/dashboards">
+            <span :class="{ 'selected-nav-option': currentRoutePath === '/dashboards' }">Dashboards</span>
+          </RouterLink>
           <RouterLink to="/users">
             <span :class="{ 'selected-nav-option': currentRoutePath === '/users' }">Users</span>
           </RouterLink>

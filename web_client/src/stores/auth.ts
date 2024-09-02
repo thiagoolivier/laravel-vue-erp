@@ -40,6 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
           },
         });
         lastVerifyTime.value = Date.now();
+
         return true;
       } catch (e) {
         return false;
