@@ -1,10 +1,10 @@
 {
-  "name": "assinante_bd_web",
+  "name": "laravel-vue-erp",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 3000",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
