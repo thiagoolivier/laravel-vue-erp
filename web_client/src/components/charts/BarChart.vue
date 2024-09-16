@@ -1,6 +1,11 @@
 <template>
     <div class="chart-card">
-        <Bar :data="data" :options="options" />
+        <div class="chart-title min-h-[20%]">
+            <span class="self-center">{{ props.title }}</span>
+        </div>
+        <div class="min-h-[80%] p-4">
+            <Bar id="barChart" :data="props.chartData" :options="options" />
+        </div>
     </div>
 </template>
 
@@ -12,38 +17,31 @@ import {
     Legend,
     BarElement,
     CategoryScale,
-    LinearScale
+    LinearScale,
+    type ChartData
 } from 'chart.js';
 import { Bar } from 'vue-chartjs';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+const props = defineProps<{
+    title: string,
+    chartData: ChartData<'bar'>
+}>();
 
-const data = {
-    labels: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ],
-    datasets: [
-        {
-            label: 'Sales (Month)',
-            backgroundColor: '#9134b3',
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-        }
-    ]
-}
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const options = {
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            display: false,
+        },
+    }
 }
 </script>
+
+<style scoped>
+canvas {
+    background-color: inherit;
+}
+</style>

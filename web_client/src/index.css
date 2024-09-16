@@ -53,9 +53,14 @@ body {
   }
 }
 
+/* The card that envolves all the content */
 .chart-card {
   box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.2);
-  @apply rounded min-h-[240px] md:min-h-[360px] p-2
+  @apply rounded-[16px] min-h-[240px] md:min-h-[360px] bg-[#2b334b]
+}
+
+.chart-title {
+  @apply flex flex-row align-middle text-[#f0f0f0] text-[20px] p-2 pl-4
 }
 
 .side-list {

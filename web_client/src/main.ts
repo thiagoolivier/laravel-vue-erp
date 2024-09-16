@@ -2,22 +2,19 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
-import axios from "./plugins/axios"
+import axios from "./plugins/axios";
 
-if (('theme' in localStorage)) {
-    if (localStorage.getItem('theme') === 'light') {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-    } else {
-      document.documentElement.classList.remove('light');
-      document.documentElement.classList.add('dark');
-    }
-} else {
-    localStorage.setItem('theme', 'light');
-    document.documentElement.classList.remove();
-    document.documentElement.classList.add('light');
+const applyTheme = (theme: string) => {
+  document.documentElement.classList.remove('light', 'dark');
+  document.documentElement.classList.add(theme);
+};
+
+const theme = localStorage.getItem('theme') || 'light';
+applyTheme(theme);
+
+if (!('theme' in localStorage)) {
+  localStorage.setItem('theme', 'light');
 }
-
 
 const app = createApp(App);
 
