@@ -7,6 +7,7 @@ A CRUD application consisting of an API backend built with Laravel and a web cli
 
 ### Features
 - Create, read, update and delete users, roles and permissions
+- Dashboards (Chart.js)
 - API authentication with JWT token
 - CORS handling
 - Request throtling
@@ -19,6 +20,7 @@ A CRUD application consisting of an API backend built with Laravel and a web cli
 - MySQL
 - Vue 3
 - Typescript
+- Chart.js
 - TailwindCSS
 - JWT
 
@@ -40,6 +42,10 @@ A CRUD application consisting of an API backend built with Laravel and a web cli
 7. Start the server: `php artisan serve`
 
 ---
-
 ### Credits
 * [Thiago Olivier](https://github.com/thiagoolivier) - Software Developer & UX Designer.
+
+#### Printscreens
+![2024-09-15_21-32](https://github.com/user-attachments/assets/86ac3de7-2eab-466a-8f06-013ce4dd847e)
+
+![2024-09-15_21-37](https://github.com/user-attachments/assets/679a5a9c-de0c-4f00-8179-4b6a9fdfc32e)
